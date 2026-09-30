@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+
+/* Brand: kumkum red + marigold gold on a warm paper background. */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
+  --font-display: 'Georgia', 'Noto Serif', ui-serif, serif;
+
+  --color-brand-50: #fdf3f2;
+  --color-brand-100: #fbe3e1;
+  --color-brand-200: #f5c3bf;
+  --color-brand-300: #ec9690;
+  --color-brand-400: #df5f58;
+  --color-brand-500: #cc3a33;
+  --color-brand-600: #b32a25;
+  --color-brand-700: #9f1d20;
+  --color-brand-800: #7c181b;
+  --color-brand-900: #5e1416;
+
+  --color-gold-50: #fef9ec;
+  --color-gold-100: #fcefc9;
+  --color-gold-200: #f9de8e;
+  --color-gold-300: #f5c953;
+  --color-gold-400: #f5b82e;
+  --color-gold-500: #e0971b;
+  --color-gold-600: #c07214;
+  --color-gold-700: #9a5215;
+
+  --color-paper: #fbf8f4;
+  --color-ink: #1f1a17;
+  --color-muted: #6b625c;
+  --color-line: #e9e2da;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+}
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-brand-600;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-[0_1px_2px_rgba(31,26,23,0.04)];
+  }
+  .label {
+    @apply mb-1 block text-sm font-medium text-ink;
+  }
+  .input {
+    @apply block w-full rounded-xl border border-line bg-white px-3 py-2.5 text-base text-ink placeholder:text-muted/70 shadow-sm sm:text-sm
+      focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-200 disabled:bg-stone-100 disabled:text-muted;
+  }
+  .table-base {
+    @apply w-full text-left text-sm;
+  }
+  .table-base th {
+    @apply whitespace-nowrap border-b border-line bg-stone-50 px-3 py-2.5 text-xs font-semibold uppercase tracking-wide text-muted;
+  }
+  .table-base td {
+    @apply border-b border-line/70 px-3 py-2.5 align-middle;
+  }
+  .table-base tbody tr:last-child td {
+    @apply border-b-0;
+  }
+  .money {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Safe area for the mobile bottom nav on notched phones. */
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.5rem);
+}

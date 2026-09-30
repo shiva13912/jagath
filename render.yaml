@@ -1,0 +1,40 @@
+# One-click deploy on Render (render.com): New > Blueprint > pick this repository.
+# Creates the web service (API + website on one URL) and a PostgreSQL database.
+# Render asks for ADMIN_EMAIL and ADMIN_PASSWORD once; that account is created on first start.
+#
+# Free plan limits: the free database expires after 30 days, and uploaded files are lost
+# when the service restarts. For lasting use, point DATABASE_URL at Supabase and set
+# STORAGE_DRIVER=s3 with the S3_* variables (see README, "File storage").
+services:
+  - type: web
+    name: durgamatha
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: node server/dist/db/seedAdmin.js; npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: durgamatha-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_NAME
+        value: Admin
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: STORAGE_DRIVER
+        value: local
+
+databases:
+  - name: durgamatha-db
+    plan: free
